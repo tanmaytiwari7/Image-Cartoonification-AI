@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImageMagic - Advanced Image Converter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="time-travel">
+            <div class="time-circle">
+                <div class="time-hand"></div>
+            </div>
+            <div class="loading-text">
+                <span class="letter">L</span>
+                <span class="letter">O</span>
+                <span class="letter">A</span>
+                <span class="letter">D</span>
+                <span class="letter">I</span>
+                <span class="letter">N</span>
+                <span class="letter">G</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">Astrid<span class="highlight">Magic</span></h1>
+                <p class="subtitle">Transform your images with AI-powered tools and advanced conversions</p>
+            </div>
+            <div class="floating-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
+        </header>
+
+        <!-- Upload Section -->
+        <section class="upload-section">
+            <div class="section-card">
+                <h2 class="section-title">Upload Your Image</h2>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                        <h3>Drag & Drop Your Image</h3>
+                        <p>or click to browse files</p>
+                        <div class="supported-formats">
+                            <span class="format-tag">JPG</span>
+                            <span class="format-tag">PNG</span>
+                            <span class="format-tag">BMP</span>
+                            <span class="format-tag">WEBP</span>
+                        </div>
+                    </div>
+                    <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.bmp,.tiff,.webp" hidden>
+                </div>
+                <div class="progress-container" id="progressContainer" style="display: none;">
+                    <div class="progress-animation">
+                        <div class="progress-orb"></div>
+                        <div class="progress-orb"></div>
+                        <div class="progress-orb"></div>
+                    </div>
+                    <p class="progress-text">Processing your image with magic...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tools Section -->
+        <section class="tools-section" id="toolsSection" style="display: none;">
+            <div class="section-card">
+                <h2 class="section-title">Transformation Tools</h2>
+                
+                <!-- Tool Navigation -->
+                <div class="tool-nav">
+                    <button class="tool-btn active" data-tool="anime">
+                        <i class="fas fa-paint-brush"></i>
+                        <span>Anime Style</span>
+                    </button>
+                    <button class="tool-btn" data-tool="color">
+                        <i class="fas fa-palette"></i>
+                        <span>Color Modes</span>
+                    </button>
+                    <button class="tool-btn" data-tool="adjust">
+                        <i class="fas fa-sliders-h"></i>
+                        <span>Adjustments</span>
+                    </button>
+                    <button class="tool-btn" data-tool="ocr">
+                        <i class="fas fa-font"></i>
+                        <span>Text Extract</span>
+                    </button>
+                </div>
+
+                <!-- Tool Panels -->
+                <div class="tool-panels">
+                    <!-- Anime Panel -->
+                    <div class="tool-panel active" id="animePanel">
+                        <div class="model-selector">
+                            <h3>Select Anime Style</h3>
+                            <div class="model-buttons">
+                                <button class="model-btn active" data-model="celeba">
+                                    <i class="fas fa-star"></i>
+                                    CelebA
+                                </button>
+                                <button class="model-btn" data-model="facev1">
+                                    <i class="fas fa-user"></i>
+                                    Face V1
+                                </button>
+                                <button class="model-btn" data-model="facev2">
+                                    <i class="fas fa-user-friends"></i>
+                                    Face V2
+                                </button>
+                                <button class="model-btn" data-model="paprika">
+                                    <i class="fas fa-pepper-hot"></i>
+                                    Paprika
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Color Modes Panel -->
+                    <div class="tool-panel" id="colorPanel">
+                        <div class="color-grid">
+                            <button class="color-btn" data-mode="grayscale">
+                                <div class="color-preview grayscale"></div>
+                                Grayscale
+                            </button>
+                            <button class="color-btn" data-mode="sepia">
+                                <div class="color-preview sepia"></div>
+                                Sepia
+                            </button>
+                            <button class="color-btn" data-mode="invert">
+                                <div class="color-preview invert"></div>
+                                Invert
+                            </button>
+                            <button class="color-btn" data-mode="cmyk">
+                                <div class="color-preview cmyk"></div>
+                                CMYK
+                            </button>
+                            <button class="color-btn" data-mode="hsv">
+                                <div class="color-preview hsv"></div>
+                                HSV
+                            </button>
+                            <button class="color-btn" data-mode="hsl">
+                                <div class="color-preview hsl"></div>
+                                HSL
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Adjustments Panel -->
+                    <div class="tool-panel" id="adjustPanel">
+                        <div class="adjustment-controls">
+                            <div class="slider-group">
+                                <label>Hue</label>
+                                <input type="range" id="hueSlider" min="0" max="200" value="100" class="slider">
+                                <span id="hueValue">100%</span>
+                            </div>
+                            <div class="slider-group">
+                                <label>Saturation</label>
+                                <input type="range" id="saturationSlider" min="0" max="200" value="100" class="slider">
+                                <span id="saturationValue">100%</span>
+                            </div>
+                            <div class="slider-group">
+                                <label>Brightness</label>
+                                <input type="range" id="brightnessSlider" min="0" max="200" value="100" class="slider">
+                                <span id="brightnessValue">100%</span>
+                            </div>
+                            <button class="btn btn-apply" id="applyAdjustments">
+                                <i class="fas fa-magic"></i>
+                                Apply Adjustments
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- OCR Panel -->
+                    <div class="tool-panel" id="ocrPanel">
+                        <div class="ocr-result">
+                            <h3>Extracted Text</h3>
+                            <div class="text-output" id="textOutput">
+                                Upload an image to extract text...
+                            </div>
+                            <button class="btn btn-copy" id="copyText">
+                                <i class="fas fa-copy"></i>
+                                Copy Text
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="results-section" id="resultsSection" style="display: none;">
+            <div class="section-card">
+                <h2 class="section-title">Your Results</h2>
+                
+                <div class="image-comparison">
+                    <div class="comparison-container">
+                        <div class="image-card original">
+                            <h3>Original Image</h3>
+                            <div class="image-wrapper">
+                                <img id="originalImage" src="" alt="Original Image">
+                            </div>
+                        </div>
+                        <div class="vs-badge">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                        <div class="image-card converted">
+                            <h3 id="convertedTitle">Converted Image</h3>
+                            <div class="image-wrapper">
+                                <img id="convertedImage" src="" alt="Converted Image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="download-options">
+                    <h3>Download Options</h3>
+                    <div class="format-selector">
+                        <label class="format-option">
+                            <input type="radio" name="format" value="JPEG" checked>
+                            <span class="format-label">JPEG</span>
+                        </label>
+                        <label class="format-option">
+                            <input type="radio" name="format" value="PNG">
+                            <span class="format-label">PNG</span>
+                        </label>
+                        <label class="format-option">
+                            <input type="radio" name="format" value="WEBP">
+                            <span class="format-label">WEBP</span>
+                        </label>
+                    </div>
+                    <div class="quality-slider">
+                        <label>Quality: <span id="qualityValue">95</span>%</label>
+                        <input type="range" id="qualitySlider" min="10" max="100" value="95" class="slider">
+                    </div>
+                    <button class="btn btn-download" id="downloadBtn">
+                        <i class="fas fa-download"></i>
+                        Download Image
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section">
+            <div class="section-card">
+                <h2 class="section-title">Powerful Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3>AI Anime Conversion</h3>
+                        <p>Transform photos into anime art using advanced AI models with multiple style options.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-fill-drip"></i>
+                        </div>
+                        <h3>Color Transformations</h3>
+                        <p>Convert between color modes including Grayscale, Sepia, CMYK, HSV, and HSL.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-eye-dropper"></i>
+                        </div>
+                        <h3>Advanced Adjustments</h3>
+                        <p>Fine-tune hue, saturation, and brightness with real-time preview and controls.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-font"></i>
+                        </div>
+                        <h3>Text Extraction</h3>
+                        <p>Extract text from images using OCR technology with copy-to-clipboard functionality.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>Powered by Astrid</p>
+            <div class="social-links">
+             
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
